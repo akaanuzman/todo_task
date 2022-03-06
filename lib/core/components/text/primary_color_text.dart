@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../extensions/app_extensions.dart';
 
-class PrimaryColorText extends Text {
-  PrimaryColorText({
+class PurpleBoldText extends Text {
+  PurpleBoldText({
     Key? key,
     required String data,
     required BuildContext context,
@@ -11,8 +11,8 @@ class PrimaryColorText extends Text {
           data,
           key: key,
           style: TextStyle(
-            color: context.primaryColor,
-            fontWeight: FontWeight.w600
+            color: context.royalPurple,
+            fontWeight: FontWeight.bold
           ),
         );
 }
