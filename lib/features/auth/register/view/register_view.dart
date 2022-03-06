@@ -22,7 +22,6 @@ class RegisterView extends StatelessWidget {
         },
         onPageBuilder: (BuildContext context, RegisterViewModel viewModel) =>
             Scaffold(
-          backgroundColor: context.secondaryBackground,
           body: _body(context),
         ),
       );

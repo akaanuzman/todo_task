@@ -25,7 +25,6 @@ class LoginView extends StatelessWidget {
         },
         onPageBuilder: (BuildContext context, LoginViewModel viewModel) =>
             Scaffold(
-          backgroundColor: context.secondaryBackground,
           body: _body(context, viewModel),
         ),
       );
@@ -51,7 +50,7 @@ class LoginView extends StatelessWidget {
             context.emptySizedHeightBoxLow3x,
             _passwordField(context, viewModel),
             context.emptySizedHeightBoxLow3x,
-            _signInButton(context),
+            _signInButton(context, viewModel),
             context.emptySizedHeightBoxLow2x,
             const Divider(
               thickness: 1.5,
@@ -94,9 +93,14 @@ class LoginView extends StatelessWidget {
         ),
       );
 
-  SpecialButton _signInButton(BuildContext context) => SpecialButton(
+  SpecialButton _signInButton(BuildContext context, LoginViewModel viewModel) =>
+      SpecialButton(
         context: context,
         data: "Sign In",
+        onTap: () {
+          viewModel.fetchApiToken("email", "password");
+          _showDialog(context);
+        },
       );
 
   Center _registerFields(BuildContext context) => Center(
@@ -114,4 +118,37 @@ class LoginView extends StatelessWidget {
           ],
         ),
       );
+
+
+ //TODO: clean code
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: context.lowBorderRadius),
+        title: FlipInY(
+          child: CircleAvatar(
+            backgroundColor: context.red,
+            child: Icon(
+              Icons.error,
+              color: context.background,
+            ),
+          ),
+        ),
+        content: FlipInY(
+          child: const Text("Wrong email or password please try again !"),
+        ),
+        actions: [
+          FlipInY(
+            child: SpecialButton(
+              context: context,
+              data: "Ok",
+              onTap: () => NavigationService.pop(),
+              backgroundColor: context.primaryColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

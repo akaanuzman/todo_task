@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
   }
 
   ThemeData _theme(BuildContext context) => ThemeData(
-        progressIndicatorTheme:
-            ProgressIndicatorThemeData(color: context.textColor),
+        scaffoldBackgroundColor: context.secondaryBackground
       );
 }
