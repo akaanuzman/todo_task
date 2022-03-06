@@ -1,14 +1,16 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../products/components/text/auth_title.dart';
 import '../../../../core/base/view/base_view.dart';
 import '../../../../core/components/buttonstyle/speacial_button_style.dart';
-import '../../../../core/components/text/headline6_text.dart';
 import '../../../../core/components/text/primary_color_text.dart';
 import '../../../../core/components/textformfield/bordered_text_form_field.dart';
+import '../../../../core/init/navigation/navigation_service.dart';
 import '../../../../products/components/background/auth_background.dart';
 import '../../../../core/extensions/app_extensions.dart';
 import '../../../../products/components/button/special_button.dart';
+import '../../register/view/register_view.dart';
 import '../viewmodel/login_view_model.dart';
 
 class LoginView extends StatelessWidget {
@@ -31,11 +33,10 @@ class LoginView extends StatelessWidget {
   AuthBackground _body(BuildContext context, LoginViewModel viewModel) =>
       AuthBackground(
         context: context,
-        bottomImage: "assets/backgrounds/login_bottom.png",
-        child: _centerField(context, viewModel),
+        child: _centerSection(context, viewModel),
       );
 
-  FadeInUpBig _centerField(BuildContext context, LoginViewModel viewModel) =>
+  FadeInUpBig _centerSection(BuildContext context, LoginViewModel viewModel) =>
       FadeInUpBig(
         child: ListView(
           padding: context.paddingNormal,
@@ -60,15 +61,8 @@ class LoginView extends StatelessWidget {
         ),
       );
 
-  Padding _title(BuildContext context) => Padding(
-        padding: context.paddingNormal,
-        child: Center(
-          child: Headline6Text(
-            data: "LOGIN",
-            context: context,
-          ),
-        ),
-      );
+  Widget _title(BuildContext context) =>
+      AuthTitle(context: context, title: "LOGIN");
 
   SvgPicture _image(BuildContext context) => SvgPicture.asset(
         "assets/images/login.svg",
@@ -113,7 +107,7 @@ class LoginView extends StatelessWidget {
               "Don't have an account?",
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () => NavigationService.pushNamed(RegisterView.path),
               child: PurpleBoldText(data: "Create account", context: context),
               style: SpecialButtonStyle(context: context),
             )
