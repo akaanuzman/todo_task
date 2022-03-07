@@ -13,7 +13,7 @@ class LoginViewModel extends BaseViewModel {
     loginService = LoginService(networkManager.dio);
   }
 
-  void fetchApiToken(String email, String password) async {
+  Future<void> fetchApiToken(String email, String password) async {
     item = await loginService.fetchApiToken(email, password);
     setState();
   }

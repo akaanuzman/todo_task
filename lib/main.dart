@@ -23,11 +23,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Todo Task',
       theme: _theme(context),
-      home: const LoginView(),
+      home: LoginView(),
     );
   }
 
-  ThemeData _theme(BuildContext context) => ThemeData(
-        scaffoldBackgroundColor: context.secondaryBackground
-      );
+  ThemeData _theme(BuildContext context) =>
+      ThemeData(scaffoldBackgroundColor: context.secondaryBackground);
 }

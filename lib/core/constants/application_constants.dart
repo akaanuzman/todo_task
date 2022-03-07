@@ -11,5 +11,5 @@ class ApplicationConstants {
 
   ApplicationConstants.init();
 
-  final String servicePath = "https://todooktay.herokuapp.com/";
+  final String servicePath = "https://todooktay.herokuapp.com/api/";
 }

@@ -16,15 +16,15 @@ class LoginService extends ILoginService {
     try {
       final response = await dio.post(
         rawValue,
-        data: {
-          "email": "utku.kapoglu@apmsoft.net",
-          "password": "123456"
-        },
+        data: {"email": email, "password": password},
       );
       if (response.statusCode == HttpStatus.ok) {
         final data = response.data;
         debugPrint(data.toString());
-        return LoginModel();
+        debugPrint(data['token']);
+        return LoginModel(
+          token: data['token'],
+        );
       }
       return LoginModel();
     } on DioError catch (e) {

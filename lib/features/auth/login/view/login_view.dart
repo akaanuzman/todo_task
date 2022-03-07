@@ -1,6 +1,9 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todo_task/features/home/tasks/view/tasks_view.dart';
 import '../../../../products/components/text/auth_title.dart';
 import '../../../../core/base/view/base_view.dart';
 import '../../../../core/components/buttonstyle/speacial_button_style.dart';
@@ -14,7 +17,11 @@ import '../../register/view/register_view.dart';
 import '../viewmodel/login_view_model.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({Key? key}) : super(key: key);
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => BaseView<LoginViewModel>(
@@ -70,6 +77,7 @@ class LoginView extends StatelessWidget {
 
   BorderedTextFormField _emailField(BuildContext context) =>
       BorderedTextFormField(
+        controller: emailController,
         context: context,
         hintText: "Your Email",
         prefixIcon: Icons.email,
@@ -79,6 +87,7 @@ class LoginView extends StatelessWidget {
   BorderedTextFormField _passwordField(
           BuildContext context, LoginViewModel viewModel) =>
       BorderedTextFormField(
+        controller: passwordController,
         context: context,
         hintText: "Your password",
         prefixIcon: Icons.lock,
@@ -97,9 +106,14 @@ class LoginView extends StatelessWidget {
       SpecialButton(
         context: context,
         data: "Sign In",
-        onTap: () {
-          viewModel.fetchApiToken("email", "password");
-          _showDialog(context);
+        onTap: () async {
+          await viewModel.fetchApiToken(
+              emailController.text, passwordController.text);
+          if (viewModel.item.token == null) {
+            _showDialog(context);
+          } else {
+            NavigationService.pushNamed(TasksView.path);
+          }
         },
       );
 
@@ -119,8 +133,7 @@ class LoginView extends StatelessWidget {
         ),
       );
 
-
- //TODO: clean code
+  //TODO: clean code
   void _showDialog(BuildContext context) {
     showDialog(
       context: context,

@@ -5,6 +5,7 @@ import 'package:todo_task/core/extensions/app_extensions.dart';
 import '../viewmodel/task_view_model.dart';
 
 class TasksView extends StatelessWidget {
+  static const path = '/tasks';
   const TasksView({Key? key}) : super(key: key);
 
   @override
