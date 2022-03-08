@@ -37,6 +37,8 @@ extension DurationExtension on BuildContext {
   Duration get durationNormal => const Duration(seconds: 1);
   Duration get durationSlow => const Duration(seconds: 2);
   Duration get durationExtraSlow => const Duration(seconds: 3);
+  Duration get durationHighSlow => const Duration(seconds: 5);
+
 }
 
 extension PaddingExtension on BuildContext {

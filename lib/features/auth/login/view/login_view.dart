@@ -3,25 +3,28 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todo_task/core/components/alert/login_failed.dart';
+import 'package:todo_task/core/components/alert/failed_alert.dart';
 import 'package:todo_task/features/home/tasks/view/tasks_view.dart';
-import '../../../../products/components/text/auth_title.dart';
+
 import '../../../../core/base/view/base_view.dart';
 import '../../../../core/components/buttonstyle/speacial_button_style.dart';
 import '../../../../core/components/text/primary_color_text.dart';
 import '../../../../core/components/textformfield/bordered_text_form_field.dart';
+import '../../../../core/extensions/app_extensions.dart';
 import '../../../../core/init/navigation/navigation_service.dart';
 import '../../../../products/components/background/auth_background.dart';
-import '../../../../core/extensions/app_extensions.dart';
 import '../../../../products/components/button/special_button.dart';
+import '../../../../products/components/text/auth_title.dart';
 import '../../register/view/register_view.dart';
 import '../viewmodel/login_view_model.dart';
 
 class LoginView extends StatelessWidget {
+  static const path = '/login';
+
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  String usernameErrorText = "";
+  String emailErrorText = "";
   String passwordErrorText = "";
 
   LoginView({Key? key}) : super(key: key);
@@ -40,7 +43,11 @@ class LoginView extends StatelessWidget {
   void _showDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => LoginFailed(context: context),
+      builder: (context) => FailedAlert(
+        context: context,
+        content: "Wrong password or email ! \n"
+            "Please try again",
+      ),
     );
   }
 
@@ -59,37 +66,37 @@ class LoginView extends StatelessWidget {
         ),
       );
 
-  Widget _body(BuildContext context, LoginViewModel viewModel) => Form(
-        key: _formKey,
-        child: AuthBackground(
-          context: context,
-          child: _centerSection(context, viewModel),
+  Widget _body(BuildContext context, LoginViewModel viewModel) => FadeInUpBig(
+        child: Form(
+          key: _formKey,
+          child: AuthBackground(
+            context: context,
+            child: _centerSection(context, viewModel),
+          ),
         ),
       );
 
-  FadeInUpBig _centerSection(BuildContext context, LoginViewModel viewModel) =>
-      FadeInUpBig(
-        child: ListView(
-          padding: context.paddingNormal,
-          physics: const BouncingScrollPhysics(),
-          children: [
-            context.emptySizedHeightBoxNormal,
-            _title(context),
-            context.emptySizedHeightBoxLow3x,
-            _image(context),
-            context.emptySizedHeightBoxLow3x,
-            _emailField(context, viewModel),
-            context.emptySizedHeightBoxLow3x,
-            _passwordField(context, viewModel),
-            context.emptySizedHeightBoxLow3x,
-            _signInButton(context, viewModel),
-            context.emptySizedHeightBoxLow2x,
-            const Divider(
-              thickness: 1.5,
-            ),
-            _registerFields(context),
-          ],
-        ),
+  ListView _centerSection(BuildContext context, LoginViewModel viewModel) =>
+      ListView(
+        padding: context.paddingNormal,
+        physics: const BouncingScrollPhysics(),
+        children: [
+          context.emptySizedHeightBoxNormal,
+          _title(context),
+          context.emptySizedHeightBoxLow3x,
+          _image(context),
+          context.emptySizedHeightBoxLow3x,
+          _emailField(context, viewModel),
+          context.emptySizedHeightBoxLow3x,
+          _passwordField(context, viewModel),
+          context.emptySizedHeightBoxLow3x,
+          _signInButton(context, viewModel),
+          context.emptySizedHeightBoxLow2x,
+          const Divider(
+            thickness: 1.5,
+          ),
+          _registerFields(context),
+        ],
       );
 
   Widget _title(BuildContext context) =>
@@ -105,7 +112,7 @@ class LoginView extends StatelessWidget {
       BorderedTextFormField(
         controller: emailController,
         validator: (username) =>
-            usernameErrorText = viewModel.appValidator.emailCheck(username),
+            emailErrorText = viewModel.appValidator.emailCheck(username),
         context: context,
         hintText: "Your Email",
         prefixIcon: Icons.email,

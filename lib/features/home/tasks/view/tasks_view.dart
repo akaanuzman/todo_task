@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/base/view/base_view.dart';
 import '../../../../core/components/text/headline6_text.dart';
 import '../../../../core/extensions/app_extensions.dart';

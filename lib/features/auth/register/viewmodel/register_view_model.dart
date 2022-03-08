@@ -1,10 +1,12 @@
-import 'package:todo_task/features/auth/register/service/register_service.dart';
+import '../model/register_model.dart';
+import '../service/register_service.dart';
 
 import '../../../../core/base/viewmodel/base_view_model.dart';
 import '../service/IRegisterService.dart';
 
 class RegisterViewModel extends BaseViewModel {
   late final IRegisterService registerService;
+  RegisterModel item = RegisterModel();
 
   @override
   void init() {
@@ -12,7 +14,7 @@ class RegisterViewModel extends BaseViewModel {
   }
 
   Future<void> postUser(String email, String password) async {
-    await registerService.postUser(email, password);
+    item = await registerService.postUser(email, password);
     setState();
   }
 }

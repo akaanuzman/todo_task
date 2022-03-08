@@ -1,17 +1,26 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import '../../extensions/app_extensions.dart';
 
 import '../../../products/components/button/special_button.dart';
+import '../../extensions/app_extensions.dart';
 import '../../init/navigation/navigation_service.dart';
 
-class LoginFailed extends AlertDialog {
-  LoginFailed({Key? key, required BuildContext context})
-      : super(
+class FailedAlert extends AlertDialog {
+  FailedAlert({
+    Key? key,
+    required BuildContext context,
+    required String content,
+  }) : super(
           key: key,
+          backgroundColor: context.blueChalk,
           shape: RoundedRectangleBorder(borderRadius: context.lowBorderRadius),
           title: _errorIcon(context),
-          content: _content,
+          content: FlipInY(
+            child: Text(
+              content,
+              textAlign: TextAlign.center,
+            ),
+          ),
           actions: [
             _button(context),
           ],
@@ -22,13 +31,9 @@ class LoginFailed extends AlertDialog {
           backgroundColor: context.red,
           child: Icon(
             Icons.error,
-            color: context.background,
+            color: context.blueChalk,
           ),
         ),
-      );
-
-  static FlipInY get _content => FlipInY(
-        child: const Text("Wrong email or password please try again !"),
       );
 
   static FlipInY _button(BuildContext context) => FlipInY(
@@ -36,7 +41,7 @@ class LoginFailed extends AlertDialog {
           context: context,
           data: "Ok",
           onTap: () => NavigationService.pop(),
-          backgroundColor: context.primaryColor,
+          backgroundColor: context.royalPurple,
         ),
       );
 }
