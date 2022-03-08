@@ -22,16 +22,19 @@ class RegisterView extends StatelessWidget {
         },
         onPageBuilder: (BuildContext context, RegisterViewModel viewModel) =>
             Scaffold(
-          body: _body(context),
+          body: _body(context, viewModel),
         ),
       );
 
-  AuthBackground _body(BuildContext context) => AuthBackground(
+  AuthBackground _body(BuildContext context, RegisterViewModel viewModel) =>
+      AuthBackground(
         context: context,
-        child: _centerSection(context),
+        child: _centerSection(context, viewModel),
       );
 
-  FadeInUpBig _centerSection(BuildContext context) => FadeInUpBig(
+  FadeInUpBig _centerSection(
+          BuildContext context, RegisterViewModel viewModel) =>
+      FadeInUpBig(
         child: ListView(
           padding: context.paddingNormal,
           physics: const BouncingScrollPhysics(),
@@ -44,7 +47,13 @@ class RegisterView extends StatelessWidget {
             context.emptySizedHeightBoxLow3x,
             _passwordField(context),
             context.emptySizedHeightBoxLow3x,
-            SpecialButton(context: context, data: "Register")
+            SpecialButton(
+              context: context,
+              data: "Register",
+              onTap: () async {
+                await viewModel.postUser("uzmanakan@gmail.com", "123456");
+              },
+            )
           ],
         ),
       );

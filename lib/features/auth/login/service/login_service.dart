@@ -21,7 +21,6 @@ class LoginService extends ILoginService {
       if (response.statusCode == HttpStatus.ok) {
         final data = response.data;
         debugPrint(data.toString());
-        debugPrint(data['token']);
         return LoginModel(
           token: data['token'],
         );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_task/core/base/view/base_view.dart';
-import 'package:todo_task/core/components/text/headline6_text.dart';
-import 'package:todo_task/core/extensions/app_extensions.dart';
+import '../../../../core/base/view/base_view.dart';
+import '../../../../core/components/text/headline6_text.dart';
+import '../../../../core/extensions/app_extensions.dart';
 import '../viewmodel/task_view_model.dart';
 
 class TasksView extends StatelessWidget {

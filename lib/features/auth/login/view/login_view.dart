@@ -3,6 +3,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todo_task/core/components/alert/login_failed.dart';
 import 'package:todo_task/features/home/tasks/view/tasks_view.dart';
 import '../../../../products/components/text/auth_title.dart';
 import '../../../../core/base/view/base_view.dart';
@@ -20,8 +21,30 @@ class LoginView extends StatelessWidget {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String usernameErrorText = "";
+  String passwordErrorText = "";
 
   LoginView({Key? key}) : super(key: key);
+
+  void _loginOperation(BuildContext context, LoginViewModel viewModel) async {
+    await viewModel.fetchApiToken(
+        emailController.text, passwordController.text);
+    if (viewModel.item.token == null) {
+      _showDialog(context);
+    } else {
+      NavigationService.pushNamed(TasksView.path);
+    }
+    _formKey.currentState!.validate();
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => LoginFailed(context: context),
+    );
+  }
+
+  void get _goToRegisterPage => NavigationService.pushNamed(RegisterView.path);
 
   @override
   Widget build(BuildContext context) => BaseView<LoginViewModel>(
@@ -36,10 +59,12 @@ class LoginView extends StatelessWidget {
         ),
       );
 
-  AuthBackground _body(BuildContext context, LoginViewModel viewModel) =>
-      AuthBackground(
-        context: context,
-        child: _centerSection(context, viewModel),
+  Widget _body(BuildContext context, LoginViewModel viewModel) => Form(
+        key: _formKey,
+        child: AuthBackground(
+          context: context,
+          child: _centerSection(context, viewModel),
+        ),
       );
 
   FadeInUpBig _centerSection(BuildContext context, LoginViewModel viewModel) =>
@@ -53,7 +78,7 @@ class LoginView extends StatelessWidget {
             context.emptySizedHeightBoxLow3x,
             _image(context),
             context.emptySizedHeightBoxLow3x,
-            _emailField(context),
+            _emailField(context, viewModel),
             context.emptySizedHeightBoxLow3x,
             _passwordField(context, viewModel),
             context.emptySizedHeightBoxLow3x,
@@ -75,9 +100,12 @@ class LoginView extends StatelessWidget {
         height: context.dynamicWidth(0.55),
       );
 
-  BorderedTextFormField _emailField(BuildContext context) =>
+  BorderedTextFormField _emailField(
+          BuildContext context, LoginViewModel viewModel) =>
       BorderedTextFormField(
         controller: emailController,
+        validator: (username) =>
+            usernameErrorText = viewModel.appValidator.emailCheck(username),
         context: context,
         hintText: "Your Email",
         prefixIcon: Icons.email,
@@ -88,17 +116,23 @@ class LoginView extends StatelessWidget {
           BuildContext context, LoginViewModel viewModel) =>
       BorderedTextFormField(
         controller: passwordController,
+        validator: (password) =>
+            passwordErrorText = viewModel.appValidator.passwordCheck(password),
         context: context,
         hintText: "Your password",
         prefixIcon: Icons.lock,
         obscureText: viewModel.isShowPassword,
         filled: true,
-        suffixIcon: IconButton(
-          onPressed: viewModel.showPassword,
-          icon: Icon(
-            Icons.remove_red_eye,
-            color: context.royalPurple,
-          ),
+        suffixIcon: _passwordFieldIconButton(viewModel, context),
+      );
+
+  IconButton _passwordFieldIconButton(
+          LoginViewModel viewModel, BuildContext context) =>
+      IconButton(
+        onPressed: viewModel.showPassword,
+        icon: Icon(
+          Icons.remove_red_eye,
+          color: context.royalPurple,
         ),
       );
 
@@ -106,15 +140,7 @@ class LoginView extends StatelessWidget {
       SpecialButton(
         context: context,
         data: "Sign In",
-        onTap: () async {
-          await viewModel.fetchApiToken(
-              emailController.text, passwordController.text);
-          if (viewModel.item.token == null) {
-            _showDialog(context);
-          } else {
-            NavigationService.pushNamed(TasksView.path);
-          }
-        },
+        onTap: () => _loginOperation(context, viewModel),
       );
 
   Center _registerFields(BuildContext context) => Center(
@@ -125,43 +151,11 @@ class LoginView extends StatelessWidget {
               "Don't have an account?",
             ),
             TextButton(
-              onPressed: () => NavigationService.pushNamed(RegisterView.path),
+              onPressed: () => _goToRegisterPage,
               child: PurpleBoldText(data: "Create account", context: context),
               style: SpecialButtonStyle(context: context),
             )
           ],
         ),
       );
-
-  //TODO: clean code
-  void _showDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: context.lowBorderRadius),
-        title: FlipInY(
-          child: CircleAvatar(
-            backgroundColor: context.red,
-            child: Icon(
-              Icons.error,
-              color: context.background,
-            ),
-          ),
-        ),
-        content: FlipInY(
-          child: const Text("Wrong email or password please try again !"),
-        ),
-        actions: [
-          FlipInY(
-            child: SpecialButton(
-              context: context,
-              data: "Ok",
-              onTap: () => NavigationService.pop(),
-              backgroundColor: context.primaryColor,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
