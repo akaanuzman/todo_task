@@ -29,56 +29,62 @@ class TaskDetailView extends StatelessWidget {
             ),
             iconTheme: IconThemeData(color: context.textColor),
           ),
-          body: FadeInUpBig(
-            child: Center(
-              child: Padding(
-                padding: context.paddingMedium,
-                child: Card(
-                  color: context.blueChalk,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: context.highBorderRadius),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        context.emptySizedHeightBoxNormal,
-                        SvgPicture.asset(
-                          "assets/images/signup.svg",
-                          height: context.dynamicHeight(0.25),
-                        ),
-                        context.emptySizedHeightBoxNormal,
-                        Card(
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: context.highBorderRadius),
-                          child: ListTile(
-                            contentPadding: context.paddingNormal,
-                            leading: Padding(
-                              padding: context.horizontalPaddingLow,
-                              child: CircleAvatar(
-                                backgroundColor: HexColorExtension.fromHex(
-                                    model.color ?? ""),
-                                radius: 12.5,
-                              ),
-                            ),
-                            title: Subtitle1Text(
-                                context: context, data: "${model.title}"),
-                            subtitle: Subtitle2Text(
-                              context: context,
-                              data: "${model.date}",
-                              color: context.grey,
-                            ),
-                            trailing: _buttons(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          body: _body(context),
+        ),
+      );
+
+  FadeInUpBig _body(BuildContext context) => FadeInUpBig(
+        child: Center(
+          child: Padding(
+            padding: context.paddingMedium,
+            child: _outSideCard(context),
           ),
         ),
+      );
+
+  Card _outSideCard(BuildContext context) => Card(
+        color: context.blueChalk,
+        shape: RoundedRectangleBorder(borderRadius: context.highBorderRadius),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              context.emptySizedHeightBoxNormal,
+              SvgPicture.asset(
+                "assets/images/signup.svg",
+                height: context.dynamicHeight(0.25),
+              ),
+              context.emptySizedHeightBoxNormal,
+              _insideCard(context),
+            ],
+          ),
+        ),
+      );
+
+  Card _insideCard(BuildContext context) => Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: context.highBorderRadius),
+        child: ListTile(
+          contentPadding: context.paddingNormal,
+          leading: _leading(context),
+          title: Subtitle1Text(context: context, data: "${model.title}"),
+          subtitle: _subtitle(context),
+          trailing: _buttons(context),
+        ),
+      );
+
+  Padding _leading(BuildContext context) => Padding(
+        padding: context.horizontalPaddingLow,
+        child: CircleAvatar(
+          backgroundColor: HexColorExtension.fromHex(model.color ?? ""),
+          radius: 12.5,
+        ),
+      );
+
+  Subtitle2Text _subtitle(BuildContext context) => Subtitle2Text(
+        context: context,
+        data: "${model.date}",
+        color: context.grey,
       );
 
   Wrap _buttons(BuildContext context) => Wrap(

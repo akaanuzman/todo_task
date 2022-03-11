@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_task/features/home/donetasks/view/done_tasks_view.dart';
 import 'package:todo_task/features/home/tasks/view/tasks_view.dart';
 
 import '../../../../core/extensions/app_extensions.dart';
@@ -12,7 +13,7 @@ class TabbarView extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<TabbarModel> _tabItems = [
       TabbarModel(icon: Icons.assignment, child: TasksView(token: token)),
-      TabbarModel(icon: Icons.task_alt, child: const Scaffold()),
+      TabbarModel(icon: Icons.task_alt, child: const DoneTasksView()),
       TabbarModel(icon: Icons.notifications, child: const Scaffold()),
     ];
     return DefaultTabController(

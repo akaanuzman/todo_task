@@ -14,7 +14,7 @@ class TasksService extends ITasksService {
   Future<List<TasksModel>> fetchAllTasks(String token) async {
     try {
       final response = await dio.get(
-        TasksServiceEndPoints.TASKS.rawValue,
+        TasksServiceEndPoints.TASKS.rawValue(token),
         options: Options(
           headers: {"Authorization": "Bearer $token"},
         ),
@@ -38,7 +38,7 @@ class TasksService extends ITasksService {
       String icon, String color) async {
     try {
       final response = await dio.post(
-        TasksServiceEndPoints.TASKS.rawValue,
+        TasksServiceEndPoints.TASKS.rawValue(token),
         data: {
           "title": title,
           "reminder": reminder,
@@ -51,7 +51,7 @@ class TasksService extends ITasksService {
       );
       if (response.statusCode == HttpStatus.ok) {
         final data = response.data;
-        debugPrint(data.toString());
+        debugPrint("Add success : $data");
         return TasksModel(
           title: data['title'],
           reminder: data['reminder'],
@@ -64,6 +64,20 @@ class TasksService extends ITasksService {
     } on DioError catch (e) {
       debugPrint(e.response.toString());
       return TasksModel();
+    }
+  }
+
+  @override
+  Future<void> deleteTask(String token, String id) async {
+    try {
+      await dio.delete(
+        TasksServiceEndPoints.DELETE.rawValue(id),
+        options: Options(
+          headers: {"Authorization": "Bearer $token"},
+        ),
+      );
+    } on DioError catch (e) {
+      debugPrint(e.response.toString());
     }
   }
 }

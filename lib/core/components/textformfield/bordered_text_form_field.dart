@@ -55,7 +55,7 @@ class BorderedTextFormField extends AppTextFormField {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: borderRadius ?? context.normalBorderRadius,
-              borderSide: BorderSide(color: context.blueChalk),
+              borderSide: BorderSide(color: context.royalPurple),
             ),
             fillColor: fillColor,
             filled: filled);

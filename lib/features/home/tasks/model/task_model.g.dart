@@ -13,4 +13,5 @@ TasksModel _$TasksModelFromJson(Map<String, dynamic> json) => TasksModel(
       isDone: json['isDone'] as bool?,
       icon: json['icon'] as String?,
       color: json['color'] as String?,
-    );
+    )..id = json['_id'] as String?;
+

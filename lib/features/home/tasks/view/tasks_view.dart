@@ -1,8 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_task/core/components/text/primary_color_text.dart';
 import 'package:todo_task/core/components/text/subtitle1_text.dart';
 import 'package:todo_task/features/home/taskdetail/view/task_detail_view.dart';
+import 'package:todo_task/features/home/tasks/view/add_task_view.dart';
 import 'package:todo_task/products/components/button/special_button.dart';
 import 'package:todo_task/core/extensions/hex_color_extensions.dart';
 
@@ -20,14 +22,6 @@ class TasksView extends StatelessWidget {
 
   const TasksView({Key? key, required this.token}) : super(key: key);
 
-  void _addTask(
-      TasksViewModel viewModel, String title, String icon, String color) async {
-    color = appValidator.colorCheck(color);
-    debugPrint(color);
-    await viewModel.addTask(token, title, false, icon, color);
-    NavigationService.pop();
-  }
-
   @override
   Widget build(BuildContext context) => BaseView<TasksViewModel>(
         viewModel: TasksViewModel(),
@@ -38,6 +32,7 @@ class TasksView extends StatelessWidget {
         },
         onPageBuilder: (BuildContext context, TasksViewModel viewModel) =>
             Scaffold(
+          //TODO: make component
           appBar: AppBar(
             automaticallyImplyLeading: false,
             centerTitle: false,
@@ -63,7 +58,11 @@ class TasksView extends StatelessWidget {
                         PurpleBoldText(data: "Add todo", context: context)
                       ],
                     ),
-                    onTap: () => _showModalBottomSheet(context, viewModel),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => AddTaskView(token: token),
+                      ),
+                    ),
                   ),
                 ),
               )
@@ -112,14 +111,48 @@ class TasksView extends StatelessWidget {
         ),
       );
 
-  Card _cardItem(BuildContext context, TasksViewModel viewModel, int index) =>
-      Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: context.highBorderRadius,
+  Widget _cardItem(BuildContext context, TasksViewModel viewModel, int index) =>
+      Slidable(
+        startActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          children: [
+            SlidableAction(
+              onPressed: (context) async => await viewModel.deleteTask(
+                  token, viewModel.items[index].id ?? ""),
+              backgroundColor: context.red,
+              foregroundColor: context.secondaryBackground,
+              icon: Icons.delete,
+              label: 'Delete',
+            ),
+            SlidableAction(
+              onPressed: (context) {},
+              backgroundColor: context.primaryColor,
+              foregroundColor: context.secondaryBackground,
+              icon: Icons.update,
+              label: 'Update',
+            ),
+          ],
         ),
-        color: HexColorExtension.fromHex(viewModel.items[index].color!),
-        elevation: 3,
-        child: _listTileItem(context, viewModel, index),
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          children: [
+            SlidableAction(
+              onPressed: (context) {},
+              backgroundColor: context.orange,
+              foregroundColor: context.secondaryBackground,
+              icon: Icons.notifications,
+              label: 'Reminder',
+            ),
+          ],
+        ),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: context.highBorderRadius,
+          ),
+          color: HexColorExtension.fromHex(viewModel.items[index].color!),
+          elevation: 3,
+          child: _listTileItem(context, viewModel, index),
+        ),
       );
 
   ListTile _listTileItem(
@@ -155,8 +188,14 @@ class TasksView extends StatelessWidget {
       context: context,
       backgroundColor: context.secondaryBackground,
       shape: RoundedRectangleBorder(borderRadius: context.highBorderRadius),
-      builder: (context) => _bottomSheetBody(
-          context, titleController, iconController, colorController, viewModel),
+      builder: (context) => StatefulBuilder(
+          builder: (context, StateSetter setState) => _bottomSheetBody(
+              context,
+              titleController,
+              iconController,
+              colorController,
+              viewModel,
+              setState)),
     );
   }
 
@@ -165,7 +204,8 @@ class TasksView extends StatelessWidget {
           TextEditingController titleController,
           TextEditingController iconController,
           TextEditingController colorController,
-          TasksViewModel viewModel) =>
+          TasksViewModel viewModel,
+          StateSetter setState) =>
       FadeInUpBig(
         child: ListView(
           padding: context.paddingNormal,
@@ -181,7 +221,7 @@ class TasksView extends StatelessWidget {
             _colorField(colorController, context),
             context.emptySizedHeightBoxLow3x,
             _buttons(context, viewModel, titleController, iconController,
-                colorController)
+                colorController, setState)
           ],
         ),
       );
@@ -232,7 +272,8 @@ class TasksView extends StatelessWidget {
           TasksViewModel viewModel,
           TextEditingController titleController,
           TextEditingController iconController,
-          TextEditingController colorController) =>
+          TextEditingController colorController,
+          StateSetter setState) =>
       Align(
         alignment: Alignment.bottomRight,
         child: Wrap(
@@ -241,7 +282,7 @@ class TasksView extends StatelessWidget {
           children: [
             _cancelButton(context),
             _addTaskButton(context, viewModel, titleController, iconController,
-                colorController),
+                colorController, setState),
           ],
         ),
       );
@@ -258,16 +299,14 @@ class TasksView extends StatelessWidget {
           TasksViewModel viewModel,
           TextEditingController titleController,
           TextEditingController iconController,
-          TextEditingController colorController) =>
+          TextEditingController colorController,
+          StateSetter setState) =>
       SpecialButton(
-        context: context,
-        data: "Ok",
-        backgroundColor: context.primaryColor,
-        onTap: () => _addTask(
-          viewModel,
-          titleController.text,
-          iconController.text,
-          colorController.text,
-        ),
-      );
+          context: context,
+          data: "Ok",
+          backgroundColor: context.primaryColor,
+          onTap: () async {
+        
+            
+          });
 }

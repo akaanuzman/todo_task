@@ -13,4 +13,7 @@ abstract class ITasksService {
 
   Future<TasksModel> addTasks(
       String token, String title, bool reminder, String icon, String color);
+
+  Future<void> deleteTask(String token,String id);
+
 }

@@ -4,6 +4,7 @@ part 'task_model.g.dart';
 
 @JsonSerializable()
 class TasksModel {
+  String? id;
   String? title;
   bool? reminder;
   String? date;
