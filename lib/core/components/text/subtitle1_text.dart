@@ -10,7 +10,8 @@ class Subtitle1Text extends Text {
     Color? color,
     FontWeight? fontWeight,
     double? fontSize,
-    String? fontFamily
+    String? fontFamily,
+    TextAlign? textAlign
   }) : super(
           data,
           key: key,
@@ -20,5 +21,6 @@ class Subtitle1Text extends Text {
             fontSize: fontSize,
             fontFamily: fontFamily
           ),
+          textAlign: textAlign
         );
 }

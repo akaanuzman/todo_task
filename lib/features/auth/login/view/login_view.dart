@@ -4,7 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_task/core/components/alert/failed_alert.dart';
-import 'package:todo_task/features/home/tasks/view/tasks_view.dart';
+import 'package:todo_task/features/home/tabbar/view/tabbar_view.dart';
 
 import '../../../../core/base/view/base_view.dart';
 import '../../../../core/components/buttonstyle/speacial_button_style.dart';
@@ -35,7 +35,13 @@ class LoginView extends StatelessWidget {
     if (viewModel.item.token == null) {
       _showDialog(context);
     } else {
-      NavigationService.pushNamed(TasksView.path);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => TabbarView(
+            token: viewModel.item.token!,
+          ),
+        ),
+      );
     }
     _formKey.currentState!.validate();
   }

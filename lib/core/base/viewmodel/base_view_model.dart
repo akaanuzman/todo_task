@@ -10,7 +10,6 @@ abstract class BaseViewModel extends ChangeNotifier {
   NetworkManager get networkManager => NetworkManager.instance;
   AppValidators get appValidator => AppValidators.instance;
 
-
   void setState() {
     notifyListeners();
   }

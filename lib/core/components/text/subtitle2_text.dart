@@ -9,14 +9,16 @@ class Subtitle2Text extends Text {
     required String data,
     FontWeight? fontWeight,
     double? fontSize,
-    String? fontFamily
+    String? fontFamily,
+    Color? color,
   }) : super(
           data,
           key: key,
           style: context.textTheme.subtitle2!.copyWith(
-            fontWeight: fontWeight ?? FontWeight.bold,
+            fontWeight: fontWeight,
             fontSize: fontSize,
-            fontFamily: fontFamily
+            fontFamily: fontFamily,
+            color: color
           ),
         );
 }

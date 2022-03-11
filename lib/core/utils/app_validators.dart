@@ -16,7 +16,7 @@ class AppValidators {
       return 'The password can be at least 6 characters.';
     } else if (password.length > 25) {
       return 'Password can be up to 25 characters.';
-    } 
+    }
     return '';
   }
 
@@ -28,5 +28,15 @@ class AppValidators {
       return '';
     }
     return 'Email address is invalid.';
+  }
+
+  String colorCheck(String color) {
+    if (color == "") {
+      return 'F1E6FF';
+    }
+    if (RegExp(r'^(?:[0-9a-fA-F]{3}){1,2}$').hasMatch(color)) {
+      return color;
+    }
+    return 'F1E6FF';
   }
 }

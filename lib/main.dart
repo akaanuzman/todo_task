@@ -28,6 +28,13 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  ThemeData _theme(BuildContext context) =>
-      ThemeData(scaffoldBackgroundColor: context.secondaryBackground);
+  ThemeData _theme(BuildContext context) => ThemeData(
+        scaffoldBackgroundColor: context.secondaryBackground,
+        appBarTheme: _appBarTheme,
+      );
+
+  AppBarTheme get _appBarTheme => const AppBarTheme(
+        color: Colors.transparent,
+        elevation: 0,
+      );
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart' show Scaffold;
 import '../../../features/auth/login/view/login_view.dart';
 import '../../../features/auth/register/view/register_view.dart';
 import '../../../features/auth/success/view/success_view.dart';
-import '../../../features/home/tasks/view/tasks_view.dart';
 
 class NavigationRoute {
   static Route<CupertinoPageRoute> generateRoute(RouteSettings settings) {
@@ -13,8 +12,6 @@ class NavigationRoute {
         return CupertinoPageRoute(builder: (_) => LoginView());
       case RegisterView.path:
         return CupertinoPageRoute(builder: (_) => RegisterView());
-      case TasksView.path:
-        return CupertinoPageRoute(builder: (_) => const TasksView());
       case SuccessView.path:
         return CupertinoPageRoute(builder: (_) => const SuccessView());
       default:
