@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'skeleton_animation.dart';
+
 import '../../extensions/app_extensions.dart';
+import 'skeleton_animation.dart';
 
 class SkeletonCard extends Shimmer {
   SkeletonCard({
@@ -24,7 +25,7 @@ class SkeletonCard extends Shimmer {
 
   static Shimmer _leading(BuildContext context) => Shimmer(
         child: CircleAvatar(
-          backgroundColor: context.secondaryTextColor.withOpacity(0.5),
+          backgroundColor: context.royalPurple,
         ),
       );
 

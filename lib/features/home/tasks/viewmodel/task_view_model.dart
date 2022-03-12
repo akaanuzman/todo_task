@@ -29,7 +29,7 @@ class TasksViewModel extends BaseViewModel {
 
   Future<void> addTask(String token, String title, bool reminder, String icon,
       String color) async {
-    items.add(await tasksService.addTasks(token, title, reminder, icon, color));
+    await tasksService.addTasks(token, title, reminder, icon, color);
     setState();
   }
 

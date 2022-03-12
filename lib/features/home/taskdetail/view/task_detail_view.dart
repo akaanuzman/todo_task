@@ -1,14 +1,15 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
 import '../../../../core/base/view/base_view.dart';
 import '../../../../core/components/text/headline6_text.dart';
 import '../../../../core/components/text/subtitle1_text.dart';
 import '../../../../core/components/text/subtitle2_text.dart';
-import '../../../../core/extensions/hex_color_extensions.dart';
-import '../viewmodel/task_detail_view_model.dart';
-import '../../tasks/model/task_model.dart';
 import '../../../../core/extensions/app_extensions.dart';
+import '../../../../core/extensions/hex_color_extensions.dart';
+import '../../tasks/model/task_model.dart';
+import '../viewmodel/task_detail_view_model.dart';
 
 class TaskDetailView extends StatelessWidget {
   final TasksModel model;

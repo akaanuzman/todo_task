@@ -3,7 +3,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todo_task/core/components/alert/failed_alert.dart';
 import 'package:todo_task/features/home/tabbar/view/tabbar_view.dart';
 
 import '../../../../core/base/view/base_view.dart';
@@ -33,7 +32,13 @@ class LoginView extends StatelessWidget {
     await viewModel.fetchApiToken(
         emailController.text, passwordController.text);
     if (viewModel.item.token == null) {
-      _showDialog(context);
+      viewModel.showAlertDialog(
+        context,
+        "Wrong password or email ! \n"
+        "Please try again",
+        null,
+        null,
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         viewModel.defaultSnackbar("Successfully logged in !"),
@@ -48,17 +53,6 @@ class LoginView extends StatelessWidget {
       );
     }
     _formKey.currentState!.validate();
-  }
-
-  void _showDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => FailedAlert(
-        context: context,
-        content: "Wrong password or email ! \n"
-            "Please try again",
-      ),
-    );
   }
 
   void get _goToRegisterPage => NavigationService.pushNamed(RegisterView.path);

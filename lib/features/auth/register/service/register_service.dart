@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../model/register_model.dart';
 
+import '../model/register_model.dart';
 import 'IRegisterService.dart';
 import 'register_service_end_points.dart';
 

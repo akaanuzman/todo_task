@@ -1,9 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../core/base/view/base_view.dart';
 import '../../../../core/extensions/app_extensions.dart';
-import '../viewmodel/success_view_model.dart';
 import '../../../../products/components/background/auth_background.dart';
+import '../viewmodel/success_view_model.dart';
 
 class SuccessView extends StatelessWidget {
   static const path = '/success';

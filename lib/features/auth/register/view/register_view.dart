@@ -3,7 +3,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todo_task/core/components/alert/failed_alert.dart';
 import 'package:todo_task/features/auth/success/view/success_view.dart';
 
 import '../../../../core/base/view/base_view.dart';
@@ -30,22 +29,20 @@ class RegisterView extends StatelessWidget {
       BuildContext context, RegisterViewModel viewModel) async {
     await viewModel.postUser(emailController.text, passwordController.text);
     if (viewModel.item.email == null || viewModel.item.password == null) {
-      _showDialog(context);
+      viewModel.showAlertDialog(
+        context,
+        "This email is in use or invalid.\n"
+        "Please try again !",
+        null,
+        null,
+      );
       _formKey.currentState!.validate();
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        viewModel.defaultSnackbar("Registration successful !"),
+      );
       NavigationService.pushNamed(SuccessView.path);
     }
-  }
-
-  void _showDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => FailedAlert(
-        context: context,
-        content: "This email is in use or invalid.\n"
-            "Please try again !",
-      ),
-    );
   }
 
   @override
@@ -90,7 +87,7 @@ class RegisterView extends StatelessWidget {
           SpecialButton(
             context: context,
             data: "Register",
-            onTap: () => _registerOperation(context,viewModel),
+            onTap: () => _registerOperation(context, viewModel),
           )
         ],
       );

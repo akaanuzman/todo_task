@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'features/home/tasks/viewmodel/task_view_model.dart';
 
 import 'core/extensions/app_extensions.dart';
 import 'core/init/navigation/navigation_route.dart';
@@ -6,7 +8,14 @@ import 'core/init/navigation/navigation_service.dart';
 import 'features/auth/login/view/login_view.dart';
 
 void main() => runApp(
-      const MyApp(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TasksViewModel>(
+            create: (_) => TasksViewModel(),
+          ),
+        ],
+        child: const MyApp(),
+      ),
     );
 
 class MyApp extends StatelessWidget {

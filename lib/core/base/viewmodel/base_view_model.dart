@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 
+import '../../components/alert/failed_alert.dart';
 import '../../components/text/primary_color_text.dart';
 import '../../extensions/app_extensions.dart';
 import '../../init/network/network_manager.dart';
@@ -21,6 +21,23 @@ abstract class BaseViewModel extends ChangeNotifier {
   }
 
   void init() {}
+
+  void showAlertDialog(
+    BuildContext context,
+    String content,
+    void Function()? onTap,
+    Widget? child,
+  ) {
+    showDialog(
+      context: context,
+      builder: (context) => FailedAlert(
+        context: context,
+        content: content,
+        onTap: onTap,
+        child: child,
+      ),
+    );
+  }
 
   SnackBar defaultSnackbar(String content) => SnackBar(
         content: PurpleBoldText(data: content, context: context),

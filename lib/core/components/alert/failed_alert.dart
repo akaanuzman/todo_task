@@ -10,6 +10,8 @@ class FailedAlert extends AlertDialog {
     Key? key,
     required BuildContext context,
     required String content,
+    void Function()? onTap,
+    Widget? child,
   }) : super(
           key: key,
           backgroundColor: context.blueChalk,
@@ -22,7 +24,8 @@ class FailedAlert extends AlertDialog {
             ),
           ),
           actions: [
-            _button(context),
+            child ?? context.emptySizedHeightBoxExtraLow,
+            _button(context, onTap),
           ],
         );
 
@@ -36,11 +39,12 @@ class FailedAlert extends AlertDialog {
         ),
       );
 
-  static FlipInY _button(BuildContext context) => FlipInY(
+  static FlipInY _button(BuildContext context, void Function()? onTap) =>
+      FlipInY(
         child: SpecialButton(
           context: context,
           data: "Ok",
-          onTap: () => NavigationService.pop(),
+          onTap: onTap ?? () => NavigationService.pop(),
           backgroundColor: context.royalPurple,
         ),
       );

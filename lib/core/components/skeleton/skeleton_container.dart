@@ -10,7 +10,7 @@ class SkeletonContainer extends AspectRatio {
           key: key,
           child: Container(
             decoration: BoxDecoration(
-              color: context.secondaryTextColor.withOpacity(0.5),
+              color: context.royalPurple,
               borderRadius: context.lowBorderRadius,
             ),
           ),
