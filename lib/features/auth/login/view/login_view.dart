@@ -35,6 +35,10 @@ class LoginView extends StatelessWidget {
     if (viewModel.item.token == null) {
       _showDialog(context);
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        viewModel.defaultSnackbar("Successfully logged in !"),
+      );
+
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => TabbarView(
@@ -120,7 +124,8 @@ class LoginView extends StatelessWidget {
         validator: (username) =>
             emailErrorText = viewModel.appValidator.emailCheck(username),
         context: context,
-        hintText: "Your Email",
+        hintText: "Enter your email...",
+        labelText: "Your Email",
         prefixIcon: Icons.email,
         filled: true,
       );
@@ -132,7 +137,8 @@ class LoginView extends StatelessWidget {
         validator: (password) =>
             passwordErrorText = viewModel.appValidator.passwordCheck(password),
         context: context,
-        hintText: "Your password",
+        hintText: "Enter your password...",
+        labelText: "Your password",
         prefixIcon: Icons.lock,
         obscureText: viewModel.isShowPassword,
         filled: true,

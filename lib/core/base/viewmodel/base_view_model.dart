@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 
+import '../../components/text/primary_color_text.dart';
 import '../../extensions/app_extensions.dart';
 import '../../init/network/network_manager.dart';
 import '../../utils/app_validators.dart';
@@ -20,13 +22,9 @@ abstract class BaseViewModel extends ChangeNotifier {
 
   void init() {}
 
-  TextStyle normalText(BuildContext context) => TextStyle(
-        fontWeight: FontWeight.w600,
-        color: context.textColor,
-      );
-
-  TextStyle normalColorText(BuildContext context) => TextStyle(
-        fontWeight: FontWeight.w600,
-        color: context.primaryColor,
+  SnackBar defaultSnackbar(String content) => SnackBar(
+        content: PurpleBoldText(data: content, context: context),
+        backgroundColor: context.blueChalk,
+        duration: context.durationSlow,
       );
 }

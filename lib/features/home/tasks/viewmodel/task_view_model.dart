@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:todo_task/features/home/tasks/model/task_model.dart';
-import 'package:todo_task/features/home/tasks/service/ITaskService.dart';
-import 'package:todo_task/features/home/tasks/service/tasks_service.dart';
+import '../model/task_model.dart';
+import '../service/ITaskService.dart';
+import '../service/tasks_service.dart';
+import '../../../../core/extensions/app_extensions.dart';
 import '../../../../core/base/viewmodel/base_view_model.dart';
 
 class TasksViewModel extends BaseViewModel {
   late final ITasksService tasksService;
   List<TasksModel> items = [];
-  bool isDone = false;
-  bool isReminder = false;
+  bool isLoad = false;
 
   @override
   void init() {
@@ -17,6 +17,7 @@ class TasksViewModel extends BaseViewModel {
   }
 
   Future<void> fetchAllTasks(String token) async {
+    Timer(context.durationSlow, loadPage);
     items = await tasksService.fetchAllTasks(token);
     for (var item in items) {
       if (item.date != null) {
@@ -29,7 +30,6 @@ class TasksViewModel extends BaseViewModel {
   Future<void> addTask(String token, String title, bool reminder, String icon,
       String color) async {
     items.add(await tasksService.addTasks(token, title, reminder, icon, color));
-
     setState();
   }
 
@@ -38,8 +38,8 @@ class TasksViewModel extends BaseViewModel {
     setState();
   }
 
-  void doneTask() {
-    isDone = !isDone;
+  void loadPage() {
+    isLoad = !isLoad;
     setState();
   }
 }

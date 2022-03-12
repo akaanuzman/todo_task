@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_task/features/home/tasks/model/task_model.dart';
+import '../model/task_model.dart';
 
 import 'ITaskService.dart';
 import 'tasks_service_end_points.dart';
@@ -21,7 +21,6 @@ class TasksService extends ITasksService {
       );
       if (response.statusCode == HttpStatus.ok) {
         final data = response.data;
-
         if (data is List) {
           return data.map((e) => TasksModel.fromJson(e)).toList();
         }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_task/features/home/donetasks/view/done_tasks_view.dart';
-import 'package:todo_task/features/home/tasks/view/tasks_view.dart';
+import '../../donetasks/view/done_tasks_view.dart';
+import '../../tasks/view/tasks_view.dart';
 
 import '../../../../core/extensions/app_extensions.dart';
 import '../model/tabbar_model.dart';

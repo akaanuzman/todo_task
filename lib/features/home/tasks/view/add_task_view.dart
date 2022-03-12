@@ -1,10 +1,12 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_task/core/base/view/base_view.dart';
 import 'package:todo_task/core/extensions/app_extensions.dart';
 import 'package:todo_task/features/home/tasks/viewmodel/task_view_model.dart';
+import 'package:todo_task/products/components/appbar/special_appbar.dart';
 
-import '../../../../core/components/text/headline6_text.dart';
 import '../../../../core/components/textformfield/bordered_text_form_field.dart';
 import '../../../../core/init/navigation/navigation_service.dart';
 import '../../../../products/components/button/special_button.dart';
@@ -17,10 +19,17 @@ class AddTaskView extends StatelessWidget {
   AddTaskView({Key? key, required this.token}) : super(key: key);
 
   Future<void> _addTask(
-      TasksViewModel viewModel, String title, String icon, String color) async {
+    BuildContext context,
+    TasksViewModel viewModel,
+    String title,
+    String icon,
+    String color,
+  ) async {
     color = viewModel.appValidator.colorCheck(color);
-    debugPrint(color);
+    debugPrint("Color Hex Code: $color");
     await viewModel.addTask(token, title, false, icon, color);
+    ScaffoldMessenger.of(context)
+        .showSnackBar(viewModel.defaultSnackbar("Task successfully added !"));
     NavigationService.pop();
   }
 
@@ -33,14 +42,7 @@ class AddTaskView extends StatelessWidget {
         },
         onPageBuilder: (BuildContext context, TasksViewModel viewModel) =>
             Scaffold(
-          //TODO: make component
-          appBar: AppBar(
-            centerTitle: false,
-            title: FadeInDownBig(
-              child: Headline6Text(context: context, data: "My Tasks"),
-            ),
-            iconTheme: IconThemeData(color: context.textColor),
-          ),
+          appBar: _appBar(context),
           body: _body(
             context,
             titleController,
@@ -49,6 +51,13 @@ class AddTaskView extends StatelessWidget {
             viewModel,
           ),
         ),
+      );
+
+  SpecialAppBar _appBar(BuildContext context) => SpecialAppBar(
+        context: context,
+        title: "Add Task",
+        centerTitle: false,
+        iconThemeColor: context.textColor,
       );
 
   FadeInUpBig _body(
@@ -119,6 +128,7 @@ class AddTaskView extends StatelessWidget {
       SpecialButton(
         context: context,
         data: "Ok",
-        onTap: () => _addTask(viewModel, titleController.text, iconController.text, colorController.text),
+        onTap: () => _addTask(context, viewModel, titleController.text,
+            iconController.text, colorController.text),
       );
 }

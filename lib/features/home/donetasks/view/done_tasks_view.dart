@@ -1,9 +1,8 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_task/core/base/view/base_view.dart';
-import 'package:todo_task/features/home/donetasks/viewmodel/done_tasks_view_model.dart';
 
-import '../../../../core/components/text/headline6_text.dart';
+import '../../../../core/base/view/base_view.dart';
+import '../../../../products/components/appbar/special_appbar.dart';
+import '../viewmodel/done_tasks_view_model.dart';
 
 class DoneTasksView extends StatelessWidget {
   const DoneTasksView({Key? key}) : super(key: key);
@@ -18,13 +17,10 @@ class DoneTasksView extends StatelessWidget {
       },
       onPageBuilder: (BuildContext context, DoneTasksViewModel viewModel) =>
           Scaffold(
-            //TODO: make component
-        appBar: AppBar(
+        appBar: SpecialAppBar(
+          context: context,
+          title: "Done Tasks",
           automaticallyImplyLeading: false,
-          centerTitle: false,
-          title: FadeInDownBig(
-            child: Headline6Text(context: context, data: "Done Tasks"),
-          ),
         ),
       ),
     );

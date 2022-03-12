@@ -1,14 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:todo_task/core/base/view/base_view.dart';
-import 'package:todo_task/core/components/text/headline6_text.dart';
-import 'package:todo_task/core/components/text/subtitle1_text.dart';
-import 'package:todo_task/core/components/text/subtitle2_text.dart';
-import 'package:todo_task/core/extensions/hex_color_extensions.dart';
-import 'package:todo_task/features/home/taskdetail/viewmodel/task_detail_view_model.dart';
-import 'package:todo_task/features/home/tasks/model/task_model.dart';
-import 'package:todo_task/core/extensions/app_extensions.dart';
+import '../../../../core/base/view/base_view.dart';
+import '../../../../core/components/text/headline6_text.dart';
+import '../../../../core/components/text/subtitle1_text.dart';
+import '../../../../core/components/text/subtitle2_text.dart';
+import '../../../../core/extensions/hex_color_extensions.dart';
+import '../viewmodel/task_detail_view_model.dart';
+import '../../tasks/model/task_model.dart';
+import '../../../../core/extensions/app_extensions.dart';
 
 class TaskDetailView extends StatelessWidget {
   final TasksModel model;

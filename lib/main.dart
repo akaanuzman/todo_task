@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
 import 'core/extensions/app_extensions.dart';
@@ -7,10 +6,7 @@ import 'core/init/navigation/navigation_service.dart';
 import 'features/auth/login/view/login_view.dart';
 
 void main() => runApp(
-      DevicePreview(
-        builder: (_) => const MyApp(),
-        enabled: true,
-      ),
+      const MyApp(),
     );
 
 class MyApp extends StatelessWidget {

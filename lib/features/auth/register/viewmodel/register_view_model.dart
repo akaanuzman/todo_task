@@ -1,8 +1,7 @@
-import '../model/register_model.dart';
-import '../service/register_service.dart';
-
 import '../../../../core/base/viewmodel/base_view_model.dart';
+import '../model/register_model.dart';
 import '../service/IRegisterService.dart';
+import '../service/register_service.dart';
 
 class RegisterViewModel extends BaseViewModel {
   late final IRegisterService registerService;
